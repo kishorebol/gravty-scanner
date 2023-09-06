@@ -1,4 +1,4 @@
-<div class="fileUpload">
+<div class="fileUpload" *ngIf="!errorMessage">
   <label for="imageUpload" class="fileUpload__label">Select</label>
   <input
     type="file"
@@ -8,4 +8,8 @@
     class="fileUpload__input"
     (change)="uploadFile($event)"
   />
+</div>
+
+<div class="errorContainer" *ngIf="errorMessage">
+  <h2>{{ errorMessage }}</h2>
 </div>
