@@ -8,11 +8,11 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'gravty-scanner';
   requestUrl: any = {
-    url: 'http://localhost:4200',
+    url: location.origin,
   };
 
   fileUrl: any = {
-    url: 'http://localhost:4200',
+    url: location.origin,
   };
 
   ngOnInit() {
