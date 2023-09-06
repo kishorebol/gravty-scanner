@@ -1,0 +1,55 @@
+<div class="imageCaptureContainer" *ngIf="!webcamImage">
+  <div class="imageCaptureContainer__webCam">
+    <webcam
+      [height]="500"
+      [width]="500"
+      [trigger]="triggerObservable"
+      (imageCapture)="handleImage($event)"
+      *ngIf="showWebcam"
+      [allowCameraSwitch]="allowCameraSwitch"
+      (initError)="handleInitError($event)"
+      [switchCamera]="nextWebcamObservable"
+      (cameraSwitched)="cameraWasSwitched($event)"
+    ></webcam>
+  </div>
+
+  <div class="imageCaptureContainer__btn">
+    <button
+      (click)="showNextWebcam(true)"
+      class="imageCaptureContainer__btn--switch"
+    >
+      Switch Camera
+    </button>
+    <button
+      (click)="triggerSnapshot()"
+      class="imageCaptureContainer__btn--capture"
+    >
+      Capture
+    </button>
+  </div>
+</div>
+
+<div class="imageCaptureContainer" *ngIf="webcamImage">
+  <div class="imageCaptureContainer__image">
+    <img [src]="webcamImage.imageAsDataUrl" alt="captured Image" />
+
+    <div class="imageCaptureContainer__image__btn">
+      <button
+        class="imageCaptureContainer__image__btn--retake"
+        (click)="webcamImage = false"
+      >
+        Retake
+      </button>
+      <button
+        class="imageCaptureContainer__image__btn--upload"
+        (click)="postImage()"
+      >
+        Upload
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="errorContainer">
+  <h2>{{ errorMessage }}</h2>
+</div>

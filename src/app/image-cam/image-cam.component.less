@@ -1,0 +1,77 @@
+.imageCaptureContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  &__webCam {
+    width: fit-content;
+    margin: 20px 0px;
+  }
+
+  &__btn {
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    gap: 30px;
+
+    button {
+      width: 150px;
+      height: 40px;
+      cursor: pointer;
+      border: 0px;
+      color: #fff;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    &--switch {
+      background-color: #6c757d;
+      border: 1px solid #6c757d;
+    }
+    &--capture {
+      background-color: #0d6efd;
+      border-color: 1px solid #0d6efd;
+    }
+  }
+
+  &__image {
+    width: 500px;
+    height: 500px;
+
+    img {
+      width: 100%;
+      margin: 20px 0px;
+    }
+
+    &__btn {
+      width: fit-content;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: auto;
+      gap: 30px;
+
+      button {
+        width: 150px;
+        height: 40px;
+        cursor: pointer;
+        border: 0px;
+        color: #fff;
+        border-radius: 10px;
+        margin-bottom: 20px;
+      }
+
+      &--retake {
+        background-color: #6c757d;
+        border: 1px solid #6c757d;
+      }
+      &--upload {
+        background-color: #0d6efd;
+        border-color: 1px solid #0d6efd;
+      }
+    }
+  }
+}
