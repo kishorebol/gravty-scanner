@@ -15,11 +15,27 @@ export class FileUploadComponent {
     let requestUrl: any = JSON.parse(localStorage.getItem('scanner_url')!);
     let member_id = this.router.snapshot.params['member_id'];
     requestUrl = requestUrl.url + '/' + member_id;
-    
+
     let formData = new FormData();
     formData.append('file', fileData.target.files[0]);
 
     this.http.post(requestUrl, formData).subscribe(
+      (response: any) => {
+        this.sendFileResponse(response);
+      },
+      (respose: any) => {
+        console.log(respose);
+        this.errorMessage = respose.error.error.message;
+      }
+    );
+  }
+
+  sendFileResponse(data: any) {
+    let requestUrl: any = JSON.parse(localStorage.getItem('scanner_file_url')!);
+    let member_id = this.router.snapshot.params['member_id'];
+    requestUrl = requestUrl.url + '/' + member_id;
+
+    this.http.post(requestUrl.url, data).subscribe(
       (response: any) => {
         this.errorMessage = 'Success';
         setTimeout(() => {
@@ -28,7 +44,7 @@ export class FileUploadComponent {
       },
       (respose: any) => {
         console.log(respose);
-        this.errorMessage = respose.error.message;
+        this.errorMessage = respose.error.error.message;
       }
     );
   }
