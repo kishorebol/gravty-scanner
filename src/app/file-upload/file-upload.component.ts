@@ -35,7 +35,7 @@ export class FileUploadComponent {
     let member_id = this.router.snapshot.params['member_id'];
     requestUrl = requestUrl.url + '/' + member_id;
 
-    this.http.post(requestUrl.url, data).subscribe(
+    this.http.post(requestUrl, data).subscribe(
       (response: any) => {
         this.errorMessage = 'Success';
         setTimeout(() => {
