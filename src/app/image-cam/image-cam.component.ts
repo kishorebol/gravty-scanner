@@ -67,8 +67,6 @@ export class ImageCamComponent {
 
   postImage() {
     let requestUrl: any = JSON.parse(localStorage.getItem('scanner_url')!);
-    let member_id = this.router.snapshot.params['member_id'];
-    requestUrl = requestUrl.url + '/' + member_id;
 
     let dataURI = this.webcamImage.imageAsDataUrl;
     this.errorMessage = '';
@@ -79,7 +77,7 @@ export class ImageCamComponent {
         let formData = new FormData();
         formData.append('file', blob, 'filename');
 
-        this.http.post(requestUrl, formData).subscribe(
+        this.http.post(requestUrl.url, formData).subscribe(
           (response: any) => {
             this.sendFileResponse(response);
           },
@@ -93,10 +91,8 @@ export class ImageCamComponent {
 
   sendFileResponse(data: any) {
     let requestUrl: any = JSON.parse(localStorage.getItem('scanner_file_url')!);
-    let member_id = this.router.snapshot.params['member_id'];
-    requestUrl = requestUrl.url + '/' + member_id;
 
-    this.http.post(requestUrl, data).subscribe(
+    this.http.post(requestUrl.url, data).subscribe(
       (response: any) => {
         this.errorMessage = 'Success';
         setTimeout(() => {
