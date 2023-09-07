@@ -7,12 +7,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'gravty-scanner';
-  requestUrl: any = {
+  requestUrl: { method: 'post' | 'get' | 'put' | 'delete'; url: string } = {
     url: location.origin,
+    method: 'post',
   };
 
-  fileUrl: any = {
+  fileUrl: { method: 'post' | 'get' | 'put' | 'delete'; url: string } = {
     url: location.origin,
+    method: 'post',
   };
 
   ngOnInit() {
@@ -23,7 +25,7 @@ export class AppComponent {
     ) {
       localStorage.setItem('scanner_url', JSON.stringify(this.requestUrl));
     } else {
-      this.requestUrl = localStorage.getItem('scanner_url');
+      this.requestUrl = JSON.parse(localStorage.getItem('scanner_url')!);
     }
 
     if (
@@ -33,7 +35,7 @@ export class AppComponent {
     ) {
       localStorage.setItem('scanner_file_url', JSON.stringify(this.fileUrl));
     } else {
-      this.fileUrl = localStorage.getItem('scanner_file_url');
+      this.fileUrl = JSON.parse(localStorage.getItem('scanner_file_url')!);
     }
   }
 }

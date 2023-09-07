@@ -66,7 +66,10 @@ export class ImageCamComponent {
   }
 
   postImage() {
-    let requestUrl: any = JSON.parse(localStorage.getItem('scanner_url')!);
+    let requestUrl: {
+      method: 'post' | 'get' | 'put' | 'delete' | 'patch';
+      url: string;
+    } = JSON.parse(localStorage.getItem('scanner_url')!);
 
     let dataURI = this.webcamImage.imageAsDataUrl;
     this.errorMessage = '';
@@ -76,33 +79,50 @@ export class ImageCamComponent {
       .then((blob) => {
         let formData = new FormData();
         formData.append('file', blob, 'filename');
+        let requestOptions: any = {};
 
-        this.http.post(requestUrl.url, formData).subscribe(
-          (response: any) => {
-            this.sendFileResponse(response);
-          },
-          (respose: any) => {
-            console.log(respose);
-            this.errorMessage = respose.error.error.message;
-          }
-        );
+        if (requestUrl.method !== 'get') {
+          requestOptions['body'] = formData;
+        }
+
+        this.http
+          .request(requestUrl.method, requestUrl.url, requestOptions)
+          .subscribe(
+            (response: any) => {
+              this.sendFileResponse(response);
+            },
+            (respose: any) => {
+              console.log(respose);
+              this.errorMessage = respose.error.error.message;
+            }
+          );
       });
   }
 
   sendFileResponse(data: any) {
-    let requestUrl: any = JSON.parse(localStorage.getItem('scanner_file_url')!);
+    let requestUrl: {
+      method: 'post' | 'get' | 'put' | 'delete' | 'patch';
+      url: string;
+    } = JSON.parse(localStorage.getItem('scanner_file_url')!);
+    let requestOptions: any = {};
 
-    this.http.post(requestUrl.url, data).subscribe(
-      (response: any) => {
-        this.errorMessage = 'Success';
-        setTimeout(() => {
-          this.errorMessage = '';
-        }, 3000);
-      },
-      (respose: any) => {
-        console.log(respose);
-        this.errorMessage = respose.error.error.message;
-      }
-    );
+    if (requestUrl.method !== 'get') {
+      requestOptions['body'] = data;
+    }
+
+    this.http
+      .request(requestUrl.method, requestUrl.url, requestOptions)
+      .subscribe(
+        (response: any) => {
+          this.errorMessage = 'Success';
+          setTimeout(() => {
+            this.errorMessage = '';
+          }, 3000);
+        },
+        (respose: any) => {
+          console.log(respose);
+          this.errorMessage = respose.error.error.message;
+        }
+      );
   }
 }
